@@ -1,0 +1,40 @@
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+  <title>Facebook Login</title>
+  <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <style>
+		.social-icns { width: 200px; display: block; margin-right: auto; margin-left: auto; margin-bottom: 2em;}
+	</style>
+	<script type="text/javascript">
+   if (window.location.hash == '#_=_') {
+      window.location.hash = '';
+   }
+</script>
+</head>
+<body>
+  <header>
+    {% if user.is_authenticated %}
+		<h1> You are logged in </h1>
+    {% else %}
+      <a href="{% url 'social:begin' 'facebook' %}">
+				<img class='social-icns'
+				 src='/static/login-with-fb.png'>
+			</img></a>
+    {% endif %}
+    <hr>
+  </header>
+  <main>
+    {% for message in messages %}
+      <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+        {{ message }}
+      </p>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+  </main>
+  <footer>
+    <hr>
+  </footer>
+</body>
+</html>
